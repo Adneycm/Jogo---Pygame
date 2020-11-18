@@ -41,3 +41,27 @@ while game:
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 """
+
+# Definindo a imagem de fundo 
+largura_tela= 500
+altura_tela= 600
+tela = pygame.display.set_mode( (largura_tela,altura_tela) )
+imagem_de_fundo = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/predio1.png").convert()
+imagem_de_fundo1 = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/predio2.png").convert()
+imagem_de_fundo = pygame.transform.scale(imagem_de_fundo, (largura_tela, altura_tela))
+imagem_de_fundo1 = pygame.transform.scale(imagem_de_fundo1, (largura_tela, altura_tela))
+y_imagem_de_fundo= 0
+y_imagem_de_fundo1= altura_tela
+
+
+# Definindo as figuras do jogo
+""" Gato """
+largura_gato = 50
+altura_gato = 38
+gato_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/cat.png').convert_alpha()
+gato_imagem = pygame.transform.scale(gato_imagem, (largura_gato,altura_gato) )
+""" Objetos """
+largura_objetos = 50
+altura_objetos = 38
+#objeto_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/flyingbird').convert_alpha()
+#objeto_imagem = pygame.transform.scale(objeto_imagem, (largura_objetos,altura_objetos) )
