@@ -6,7 +6,7 @@
 
 # Blibiotecas importadas
 import pygame
-
+import random
 # Inicializando o Pygame
 pygame.init()
 
