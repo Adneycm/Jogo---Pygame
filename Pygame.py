@@ -60,11 +60,86 @@ largura_gato = 50
 altura_gato = 38
 gato_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/cat.png').convert_alpha()
 gato_imagem = pygame.transform.scale(gato_imagem, (largura_gato,altura_gato) )
-""" Objetos """
-largura_objetos = 50
-altura_objetos = 38
-#objeto_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/flyingbird').convert_alpha()
-#objeto_imagem = pygame.transform.scale(objeto_imagem, (largura_objetos,altura_objetos) )
+""" DP """
+largura_DP = 50
+altura_DP = 50
+DP_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/DP.png').convert_alpha()
+DP_imagem = pygame.transform.scale(DP_imagem, (largura_DP,altura_DP) )
+""" DP` """
+largura_DPlinha = 50
+altura_DPlinha = 50
+DPlinha_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/DP`.png').convert_alpha()
+DPlinha_imagem = pygame.transform.scale(DPlinha_imagem, (largura_DPlinha,altura_DPlinha) )
+
+# Definindo as classes:
+class Gato(pygame.sprite.Sprite):
+    def __init__(self, img):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.centerx = largura_tela / 2
+        self.rect.bottom = altura_tela / 2
+        self.speedx = 0
+
+    def update(self):
+        # Atualização da posição da nave
+        self.rect.x += self.speedx
+
+        # Mantem dentro da tela
+        if self.rect.right > largura_tela:
+            self.rect.right = largura_tela
+        if self.rect.left < 0:
+            self.rect.left = 0
+
+class DP(pygame.sprite.Sprite):
+    def __init__(self, img):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0, largura_tela - largura_DP)
+        self.rect.y = random.randint(-100, -altura_DP)
+        self.speedx = random.randint(-3, 3)
+        self.speedy = random.randint(2, 3)
+
+    def update(self):
+        # Atualizando a posição do meteoro
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        # Se o meteoro passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top > altura_tela or self.rect.right < 0 or self.rect.left > largura_tela:
+            self.rect.x = random.randint(0, largura_tela - largura_DP)
+            self.rect.y = random.randint(-100, -altura_DP)
+            self.speedx = random.randint(-3, 3)
+            self.speedy = random.randint(2, 3)
+
+class DPlinha(pygame.sprite.Sprite):
+    def __init__(self, img):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0, largura_tela - largura_DPlinha)
+        self.rect.y = random.randint(-100, altura_DPlinha)
+        self.speedx = random.randint(-3, 3)
+        self.speedy = random.randint(2, 3)
+
+    def update(self):
+        # Atualizando a posição do meteoro
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        # Se o meteoro passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top > altura_tela or self.rect.right < 0 or self.rect.left > largura_tela:
+            self.rect.x = random.randint(0, largura_tela - largura_DPlinha)
+            self.rect.y = random.randint(-100, -altura_DPlinha)
+            self.speedx = random.randint(-3, 3)
+            self.speedy = random.randint(2, 3)
 
 # Inicializando o jogo
 jogo = True
