@@ -11,6 +11,7 @@ import pygame
 pygame.init()
 
 """ Gerando Tela de início do jogo """
+"""
 tela = pygame.display.set_mode((500, 500))
 pygame.display.set_caption('Pygame')
 
@@ -39,4 +40,4 @@ while game:
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
-
+"""
