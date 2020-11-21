@@ -154,7 +154,20 @@ while jogo:
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             jogo = False
-
+    # Verifica se apertou alguma tecla.
+        if event.type == pygame.KEYDOWN:
+            # Dependendo da tecla, altera a velocidade.
+            if event.key == pygame.K_LEFT:
+                player.speedx -= 5
+            if event.key == pygame.K_RIGHT:
+                player.speedx += 5
+        # Verifica se soltou alguma tecla.
+        if event.type == pygame.KEYUP:
+            # Dependendo da tecla, altera a velocidade.
+            if event.key == pygame.K_LEFT:
+                player.speedx += 5
+            if event.key == pygame.K_RIGHT:
+                player.speedx -= 5
         # ----- Gera saídas
     
     # Chamando a função blit para que nossas imangens apareção na tela
@@ -178,4 +191,4 @@ while jogo:
      # Mostra o novo frame para o jogador
 
 # ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+pygame.quit()  # Função do PyGame que finaliza os recursos utilizados 
