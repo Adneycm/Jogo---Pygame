@@ -144,6 +144,28 @@ class DPlinha(pygame.sprite.Sprite):
 # Inicializando o jogo
 jogo = True
 
+# Lista das colisões
+colisao_dp = []
+colisao_dplinha = []
+# Criando um grupo para cada obstáculo
+all_sprites = pygame.sprite.Group()
+all_dps = pygame.sprite.Group()
+all_dplinhas = pygame.sprite.Group()
+# Criando o jogador
+gato = Gato(gato_imagem)
+all_sprites.add(gato)
+# Criando os obstáculos
+for i in range(2):
+    dp = DP(DP_imagem)
+    dplinha= DPlinha(DPlinha_imagem)
+    all_sprites.add(dp)
+    all_sprites.add(dplinha)
+    all_dps.add(dp)
+    all_dplinhas.add(dplinha)
+
+# Tempo para atualização de imagens
+clock = pygame.time.Clock()
+
 # Tempo para atualização de imagens
 clock = pygame.time.Clock()
 
