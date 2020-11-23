@@ -215,6 +215,21 @@ while jogo:
     hits_dp = pygame.sprite.spritecollide(gato, all_dps, True)
     hits_dplinha = pygame.sprite.spritecollide(gato, all_dplinhas, True)
 
+    # Definido como fica a vida do gato após a colisão
+    if len(hits_dp) >= 1:
+        colisao_dp.append(0)
+    if len(hits_dplinha) >= 1:
+        colisao_dplinha.append(0)
+
+    if len(colisao_dp) >= 3:
+        jogo = False
+    if len(colisao_dplinha) >= 2:
+        jogo = False
+    if len(colisao_dp) == 1 and len(colisao_dplinha) == 1:
+        jogo = False
+    if len(colisao_dp) >= 2 and len(colisao_dplinha) == 1:
+        jogo = False
+        
     # Desenhando os obstáculos e o gato
     all_sprites.draw(tela)
 
