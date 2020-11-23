@@ -180,22 +180,22 @@ while jogo:
         if event.type == pygame.KEYDOWN:
             # Dependendo da tecla, altera a velocidade.
             if event.key == pygame.K_LEFT:
-                player.speedx -= 5
+                gato.speedx -= 5
             if event.key == pygame.K_RIGHT:
-                player.speedx += 5
+                gato.speedx += 5
         # Verifica se soltou alguma tecla.
         if event.type == pygame.KEYUP:
             # Dependendo da tecla, altera a velocidade.
             if event.key == pygame.K_LEFT:
-                player.speedx += 5
+                gato.speedx += 5
             if event.key == pygame.K_RIGHT:
-                player.speedx -= 5
+                gato.speedx -= 5
         # ----- Gera saídas
     
     # Chamando a função blit para que nossas imangens apareção na tela
     tela.blit(imagem_de_fundo, (0,y_imagem_de_fundo))
     tela.blit(imagem_de_fundo1, (0,y_imagem_de_fundo1))
-    tela.blit(gato_imagem, (250,300))
+    #tela.blit(gato_imagem, (250,300))
 
     # Mudando as posições da imagem de fundo para que tenhamos a impressão do gato estar caindo
     y_imagem_de_fundo -= 1
@@ -208,9 +208,12 @@ while jogo:
     if y_imagem_de_fundo <= -altura_tela:
         y_imagem_de_fundo= altura_tela
 
-        # ----- Atualiza estado do jogo
+    # ----- Atualiza estado do jogo
+    # Atualizando a posição dos obstáculos
     pygame.display.update() 
-     # Mostra o novo frame para o jogador
-
+     
+     # Tratamento das colisões
+    hits_dp = pygame.sprite.spritecollide(gato, all_dps, True)
+    hits_dplinha = pygame.sprite.spritecollide(gato, all_dplinhas, True)
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados 
