@@ -208,12 +208,18 @@ while jogo:
     if y_imagem_de_fundo <= -altura_tela:
         y_imagem_de_fundo= altura_tela
 
-    # ----- Atualiza estado do jogo
     # Atualizando a posição dos obstáculos
-    pygame.display.update() 
-     
+    all_sprites.update()
+    
      # Tratamento das colisões
     hits_dp = pygame.sprite.spritecollide(gato, all_dps, True)
     hits_dplinha = pygame.sprite.spritecollide(gato, all_dplinhas, True)
+
+    # Desenhando os obstáculos e o gato
+    all_sprites.draw(tela)
+
+    # ----- Atualiza estado do jogo
+    pygame.display.update() 
+
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados 
