@@ -208,9 +208,9 @@ while jogo:
     if y_imagem_de_fundo <= -altura_tela:
         y_imagem_de_fundo= altura_tela
 
-    # Atualizando a posição dos obstáculos
+    # Atualizando a posição dos meteoros
     all_sprites.update()
-    
+     
      # Tratamento das colisões
     hits_dp = pygame.sprite.spritecollide(gato, all_dps, True)
     hits_dplinha = pygame.sprite.spritecollide(gato, all_dplinhas, True)
@@ -220,6 +220,6 @@ while jogo:
 
     # ----- Atualiza estado do jogo
     pygame.display.update() 
-
+    
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados 
