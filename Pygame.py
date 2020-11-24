@@ -141,6 +141,31 @@ class DPlinha(pygame.sprite.Sprite):
             self.speedx = random.randint(-3, 3)
             self.speedy = random.randint(2, 3)
 
+class A(pygame.sprite.Sprite):
+    def _init_(self, img):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite._init_(self)
+
+        self.image = img
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(0, largura_tela - largura_A)
+        self.rect.y = random.randint(620,650)
+        self.speedx = random.randint(-1, 1)
+        self.speedy = random.randint(-4, -2)
+
+    def update(self):
+        # Atualizando a posição do meteoro
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+        # Se o meteoro passar do final da tela, volta para cima e sorteia
+        # novas posições e velocidades
+        if self.rect.top<0 or self.rect.right < 0 or self.rect.left > largura_tela:
+            self.rect.x = random.randint(0, largura_tela - largura_A)
+            self.rect.y = random.randint(620,650)
+            self.speedx = random.randint(-1, 1)
+            self.speedy = random.randint(-4, -2)
+
+        
 # Inicializando o jogo
 jogo = True
 
