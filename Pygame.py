@@ -49,8 +49,10 @@ pessoa = pygame.transform.scale(pessoa, (70,80))
 # Inicia assets
 font = pygame.font.SysFont(None, 48)
 font1= pygame.font.SysFont(None, 70)
-ModSim = font.render('ModSim', True, (0, 0, 0))
-cat = font.render("CAT", True, (0, 0, 0))
+font2=pygame.font.Font(path.join(fontes,'RETRO_SPACE_INV.ttf'),36)
+ModSim = font2.render('ModSim', True, (255, 0, 0))
+cat = font2.render("CAT", True, (255, 0, 0))
+integrantes = font2.render("Adney, Ricardo e Ykaro", True, (0,0,0))
 Game = font1.render("Game", True, (0, 0, 0))
 Over = font1.render("Over", True, (0, 0, 0))
 
@@ -70,8 +72,9 @@ while tela_inicio:
     tela.blit(predio, (-250,300))
     tela.blit(gato, (250 - 50,300 - 38))
     tela.blit(pessoa, (200 - 70, 300 - 78))
-    tela.blit(ModSim, (50, 100))
-    tela.blit(cat, (80,150))
+    tela.blit(ModSim, (190, 100))
+    tela.blit(cat, (220,150))
+    tela.blit(integrantes, (10, 50))
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
