@@ -20,7 +20,7 @@ pygame.init()
 
 jogo = False
 tela_inicio = True
-
+tela_final = False
 
 # Definindo altura e largura da tela
 largura_tela= 500
@@ -326,13 +326,37 @@ while jogo:
     
     if Vida <= 0:
         jogo = False
-
+        tela_final = True
     # Desenhando od obstáculos
     all_sprites.draw(tela)
 
         # ----- Atualiza estado do jogo
     pygame.display.update() 
      # Mostra o novo frame para o jogador
+
+
+""" Gerando Tela de final do jogo """
+while tela_final:
+    # Trata eventos
+    for event in pygame.event.get():
+        # Verifica consequências
+        if event.type == pygame.QUIT:
+            tela_final = False
+            Quit = True
+
+        if event.type==pygame.KEYUP:
+            if event.key == pygame.K_RETURN:
+                tela_inicial = True
+                tela_final = False  
+
+    # ----- Gera saídas
+    
+    tela.blit(Game, (largura_tela/3, altura_tela/3))
+    tela.blit(Over, (largura_tela/3 ,altura_tela/3+50))
+
+    # ----- Atualiza estado do jogo
+    pygame.display.update()  # Mostra o novo frame para o jogador
+
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
