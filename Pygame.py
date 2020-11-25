@@ -70,6 +70,13 @@ largura_DPlinha = 50
 altura_DPlinha = 50
 DPlinha_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/DP`.png').convert_alpha()
 DPlinha_imagem = pygame.transform.scale(DPlinha_imagem, (largura_DPlinha,altura_DPlinha) )
+""" A+ """
+largura_A = 50
+altura_A = 50
+A_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/A+ - Sem fundo.png').convert_alpha()
+A_imagem = pygame.transform.scale(A_imagem, (largura_A,altura_A) )
+
+
 
 # Definindo as classes:
 class Gato(pygame.sprite.Sprite):
@@ -80,7 +87,7 @@ class Gato(pygame.sprite.Sprite):
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.centerx = largura_tela / 2
-        self.rect.bottom = altura_tela / 2
+        self.rect.bottom = altura_tela / 2 - 180
         self.speedx = 0
 
     def update(self):
@@ -101,9 +108,9 @@ class DP(pygame.sprite.Sprite):
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, largura_tela - largura_DP)
-        self.rect.y = random.randint(-100, -altura_DP)
-        self.speedx = random.randint(-3, 3)
-        self.speedy = random.randint(2, 3)
+        self.rect.y = random.randint(620, 650)
+        self.speedx = random.randint(-1, 1)
+        self.speedy = random.randint(-4, -2)
 
     def update(self):
         # Atualizando a posição do meteoro
@@ -111,11 +118,11 @@ class DP(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         # Se o meteoro passar do final da tela, volta para cima e sorteia
         # novas posições e velocidades
-        if self.rect.top > altura_tela or self.rect.right < 0 or self.rect.left > largura_tela:
+        if self.rect.top < 0 or self.rect.right < 0 or self.rect.left > largura_tela:
             self.rect.x = random.randint(0, largura_tela - largura_DP)
-            self.rect.y = random.randint(-100, -altura_DP)
-            self.speedx = random.randint(-3, 3)
-            self.speedy = random.randint(2, 3)
+            self.rect.y = random.randint(620, 650)
+            self.speedx = random.randint(-1, 1)
+            self.speedy = random.randint(-4, -2)
 
 class DPlinha(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -125,9 +132,9 @@ class DPlinha(pygame.sprite.Sprite):
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, largura_tela - largura_DPlinha)
-        self.rect.y = random.randint(-100, altura_DPlinha)
-        self.speedx = random.randint(-3, 3)
-        self.speedy = random.randint(2, 3)
+        self.rect.y = random.randint(620, 650)
+        self.speedx = random.randint(-1, 1)
+        self.speedy = random.randint(-4, -2)
 
     def update(self):
         # Atualizando a posição do meteoro
@@ -135,11 +142,11 @@ class DPlinha(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         # Se o meteoro passar do final da tela, volta para cima e sorteia
         # novas posições e velocidades
-        if self.rect.top > altura_tela or self.rect.right < 0 or self.rect.left > largura_tela:
+        if self.rect.top < 0 or self.rect.right < 0 or self.rect.left > largura_tela:
             self.rect.x = random.randint(0, largura_tela - largura_DPlinha)
-            self.rect.y = random.randint(-100, -altura_DPlinha)
-            self.speedx = random.randint(-3, 3)
-            self.speedy = random.randint(2, 3)
+            self.rect.y = random.randint(620, 650)
+            self.speedx = random.randint(-1, 1)
+            self.speedy = random.randint(-4, -2)
 
 class A(pygame.sprite.Sprite):
     def _init_(self, img):
