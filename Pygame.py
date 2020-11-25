@@ -11,9 +11,67 @@ import random
 # Inicializando o Pygame
 pygame.init()
 
-# Definindo a imagem de fundo 
+jogo = False
+tela_inicio = True
+
+
+# Definindo altura e largura da tela
 largura_tela= 500
 altura_tela= 600
+
+""" Gerando Tela de início do jogo """
+
+tela = pygame.display.set_mode((500, 500))
+pygame.display.set_caption('Pygame')
+
+# Definindo largura e altura da tela
+largura_tela= 500
+altura_tela= 600
+
+# Imagens para a tela inicial
+tela = pygame.display.set_mode( (largura_tela,altura_tela) )
+ceu = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/cloudy.png").convert()
+predio = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/predio tela de início.png").convert()
+gato = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/cat.png").convert_alpha()
+pessoa = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/Pessoa.png").convert_alpha()
+ceu = pygame.transform.scale(ceu, (largura_tela, altura_tela))
+predio = pygame.transform.scale(predio, (largura_tela, altura_tela))
+gato = pygame.transform.scale(gato, (50,38))
+pessoa = pygame.transform.scale(pessoa, (70,80))
+
+# Inicia assets
+font = pygame.font.SysFont(None, 48)
+font1= pygame.font.SysFont(None, 70)
+ModSim = font.render('ModSim', True, (0, 0, 0))
+cat = font.render("CAT", True, (0, 0, 0))
+Game = font1.render("Game", True, (0, 0, 0))
+Over = font1.render("Over", True, (0, 0, 0))
+
+while tela_inicio:
+    # Trata eventos
+    for event in pygame.event.get():
+        # Verifica consequências
+        if event.type == pygame.QUIT:
+            Quit=True
+            tela_inicio = False
+        if event.type==pygame.KEYUP:
+            if event.key == pygame.K_RETURN:
+                jogo = True 
+                tela_inicio=False
+    # ----- Gera saídas
+    tela.blit(ceu, (0,0))
+    tela.blit(predio, (-250,300))
+    tela.blit(gato, (250 - 50,300 - 38))
+    tela.blit(pessoa, (200 - 70, 300 - 78))
+    tela.blit(ModSim, (50, 100))
+    tela.blit(cat, (80,150))
+
+    
+    # ----- Atualiza estado do jogo
+    pygame.display.update()  # Mostra o novo frame para o jogador
+
+
+# Definindo a imagem de fundo 
 tela = pygame.display.set_mode( (largura_tela,altura_tela) )
 imagem_de_fundo = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/predio1.png").convert()
 imagem_de_fundo1 = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/predio2.png").convert()
@@ -147,10 +205,10 @@ class A(pygame.sprite.Sprite):
 
         
 # Inicializando o jogo
-jogo = True
+#jogo = True
 
 # Lista das colisões
-Vida = [0,0,0]
+Vida = 3
 
 # Criando um grupo para cada obstáculo
 all_sprites = pygame.sprite.Group()
@@ -204,10 +262,10 @@ while jogo:
 
         # ----- Gera saídas
     ## Desenhando as vidas
-    vidas = fonte.render(chr(9829) * len(Vida), True, (0,255,20))
-    vidas_rect = vidas.get_rect()
-    vidas_rect.bottomleft = (10,altura_tela-10)
-    tela.blit(vidas, vidas_rect)
+    #vidas = fonte.render(chr(9829) * len(Vida), True, (0,255,20))
+    #vidas_rect = vidas.get_rect()
+    #vidas_rect.bottomleft = (10,altura_tela-10)
+    #tela.blit(vidas, vidas_rect)
 
 
 
@@ -252,16 +310,15 @@ while jogo:
 
     # Definido como fica a vida do gato após a colisão
     if len(hits_dp) >= 1:
-        Vida.remove(Vida[0])
+        Vida -= 1
 
     if len(hits_dplinha) >= 1:
-        Vida.remove(Vida[0])
-        Vida.remove(Vida[0])
+        Vida -= 2
 
     if len(hits_a) >= 1:
-        Vida.append(0)
+        Vida += 1
 
-    if len(Vida) <= 0:
+    if Vida <= 0:
         jogo = False
 
     # Desenhando od obstáculos
