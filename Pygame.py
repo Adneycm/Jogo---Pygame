@@ -7,6 +7,13 @@
 # Blibiotecas importadas
 import pygame
 import random
+from os import path
+import sys
+
+#criando comandos de busca
+busca=path.dirname(__file__)
+imagem=path.join(busca,'Imagens do pygame')
+fontes=path.join(busca,'Fontes')
 
 # Inicializando o Pygame
 pygame.init()
@@ -30,10 +37,10 @@ altura_tela= 600
 
 # Imagens para a tela inicial
 tela = pygame.display.set_mode( (largura_tela,altura_tela) )
-ceu = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/cloudy.png").convert()
-predio = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/predio tela de início.png").convert()
-gato = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/cat.png").convert_alpha()
-pessoa = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/Pessoa.png").convert_alpha()
+ceu = pygame.image.load(path.join(imagem,'cloudy.png')).convert_alpha()
+predio = pygame.image.load(path.join(imagem,'predio1.png')).convert_alpha()
+gato = pygame.image.load(path.join(imagem,'cat.png')).convert_alpha()
+pessoa = pygame.image.load(path.join(imagem,'Pessoa.png')).convert_alpha()
 ceu = pygame.transform.scale(ceu, (largura_tela, altura_tela))
 predio = pygame.transform.scale(predio, (largura_tela, altura_tela))
 gato = pygame.transform.scale(gato, (50,38))
@@ -66,47 +73,43 @@ while tela_inicio:
     tela.blit(ModSim, (50, 100))
     tela.blit(cat, (80,150))
 
-    
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
 
 # Definindo a imagem de fundo 
 tela = pygame.display.set_mode( (largura_tela,altura_tela) )
-imagem_de_fundo = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/predio1.png").convert()
-imagem_de_fundo1 = pygame.image.load("c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/predio2.png").convert()
+imagem_de_fundo = pygame.image.load(path.join(imagem,'predio1.png')).convert_alpha()
+imagem_de_fundo1 = pygame.image.load(path.join(imagem,'predio2.png')).convert_alpha()
 imagem_de_fundo = pygame.transform.scale(imagem_de_fundo, (largura_tela, altura_tela))
 imagem_de_fundo1 = pygame.transform.scale(imagem_de_fundo1, (largura_tela, altura_tela))
 y_imagem_de_fundo= 0
 y_imagem_de_fundo1= altura_tela
 
 #Definindo as vidas
-fonte=pygame.font.Font('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/Pressstart2P.ttf',28)
+fonte=pygame.font.Font(path.join(fontes,'PressStart2P.ttf'),36)
 
 # Definindo as figuras do jogo
 """ Gato """
 largura_gato = 50
 altura_gato = 38
-gato_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/cat.png').convert_alpha()
+gato_imagem = pygame.image.load(path.join(imagem,'cat.png')).convert_alpha()
 gato_imagem = pygame.transform.scale(gato_imagem, (largura_gato,altura_gato) )
 """ DP """
 largura_DP = 50
 altura_DP = 50
-DP_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/DP.png').convert_alpha()
+DP_imagem = pygame.image.load(path.join(imagem,'DP.png')).convert_alpha()
 DP_imagem = pygame.transform.scale(DP_imagem, (largura_DP,altura_DP) )
 """ DP` """
 largura_DPlinha = 50
 altura_DPlinha = 50
-DPlinha_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/DP`.png').convert_alpha()
+DPlinha_imagem = pygame.image.load(path.join(imagem,'DP`.png')).convert_alpha()
 DPlinha_imagem = pygame.transform.scale(DPlinha_imagem, (largura_DPlinha,altura_DPlinha) )
 """ A+ """
 largura_A = 50
 altura_A = 50
-A_imagem = pygame.image.load('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/A+ - Sem fundo.png').convert_alpha()
+A_imagem = pygame.image.load(path.join(imagem,'A+ - Sem fundo.png')).convert_alpha()
 A_imagem = pygame.transform.scale(A_imagem, (largura_A,altura_A) )
-
-
-
 
 
 # Definindo as classes:
@@ -261,11 +264,11 @@ while jogo:
                 gato.speedx -= 5
 
         # ----- Gera saídas
-    ## Desenhando as vidas
-    #vidas = fonte.render(chr(9829) * len(Vida), True, (0,255,20))
-    #vidas_rect = vidas.get_rect()
-    #vidas_rect.bottomleft = (10,altura_tela-10)
-    #tela.blit(vidas, vidas_rect)
+    # Desenhando as vidas
+    vidas = fonte.render(chr(9829) * Vida, True, (0,255,255))
+    vidas_rect = vidas.get_rect()
+    vidas_rect.topright = (500,500)
+    tela.blit(vidas, vidas_rect)
 
 
 
@@ -317,7 +320,10 @@ while jogo:
 
     if len(hits_a) >= 1:
         Vida += 1
-
+    
+    if Vida>=5:
+        Vida=5
+    
     if Vida <= 0:
         jogo = False
 
