@@ -177,23 +177,31 @@ class A(pygame.sprite.Sprite):
 jogo = True
 
 # Lista das colisões
-colisao_dp = []
-colisao_dplinha = []
+Vida = [0,0,0]
+
 # Criando um grupo para cada obstáculo
 all_sprites = pygame.sprite.Group()
 all_dps = pygame.sprite.Group()
 all_dplinhas = pygame.sprite.Group()
+all_as = pygame.sprite.Group()
+
 # Criando o jogador
 gato = Gato(gato_imagem)
 all_sprites.add(gato)
+
 # Criando os obstáculos
 for i in range(2):
     dp = DP(DP_imagem)
-    dplinha= DPlinha(DPlinha_imagem)
+    dplinha = DPlinha(DPlinha_imagem)
+    a = A(A_imagem)
+
     all_sprites.add(dp)
     all_sprites.add(dplinha)
+    all_sprites.add(a)
+
     all_dps.add(dp)
     all_dplinhas.add(dplinha)
+    all_as.add(a)
 
 # Tempo para atualização de imagens
 clock = pygame.time.Clock()
@@ -243,23 +251,37 @@ while jogo:
     # Atualizando a posição dos meteoros
     all_sprites.update()
      
-     # Tratamento das colisões
+     # Tratamento de colisões
     hits_dp = pygame.sprite.spritecollide(gato, all_dps, True)
+    for dp in hits_dp:
+        g=DP(DP_imagem)
+        all_sprites.add(g)
+        all_dps.add(g)
+    
     hits_dplinha = pygame.sprite.spritecollide(gato, all_dplinhas, True)
+    for dpl in hits_dplinha:
+        h=DPlinha(DPlinha_imagem)
+        all_sprites.add(h)
+        all_dplinhas.add(h)
+    
+    hits_a = pygame.sprite.spritecollide(gato, all_as, True)
+    for a in hits_a:
+        i=DP(A_imagem)
+        all_sprites.add(i)
+        all_as.add(i)
 
     # Definido como fica a vida do gato após a colisão
     if len(hits_dp) >= 1:
-        colisao_dp.append(0)
-    if len(hits_dplinha) >= 1:
-        colisao_dplinha.append(0)
+        Vida.remove(Vida[0])
 
-    if len(colisao_dp) >= 3:
-        jogo = False
-    if len(colisao_dplinha) >= 2:
-        jogo = False
-    if len(colisao_dp) == 1 and len(colisao_dplinha) == 1:
-        jogo = False
-    if len(colisao_dp) >= 2 and len(colisao_dplinha) == 1:
+    if len(hits_dplinha) >= 1:
+        Vida.remove(Vida[0])
+        Vida.remove(Vida[0])
+
+    if len(hits_a) >= 1:
+        Vida.append(0)
+
+    if len(Vida) <= 0:
         jogo = False
         
     # Desenhando os obstáculos e o gato
