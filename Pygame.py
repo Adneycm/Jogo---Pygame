@@ -12,12 +12,13 @@ import sys
 
 #criando comandos de busca
 busca=path.dirname(__file__)
-imagem=path.join(busca,'Imagens do pygame')
-fontes=path.join(busca,'Fontes')
+imagem = path.join(busca,'Imagens do pygame')
+fontes = path.join(busca,'Fontes')
 
 # Inicializando o Pygame
 pygame.init()
 
+# Criando booleanas para as telas do jogo
 jogo = False
 tela_inicio = True
 tela_final = False
@@ -31,10 +32,7 @@ altura_tela= 600
 tela = pygame.display.set_mode((500, 500))
 pygame.display.set_caption('Pygame')
 
-# Definindo largura e altura da tela
-largura_tela= 500
-altura_tela= 600
-
+ 
 # Imagens para a tela inicial
 tela = pygame.display.set_mode( (largura_tela,altura_tela) )
 ceu = pygame.image.load(path.join(imagem,'cloudy.png')).convert_alpha()
@@ -46,7 +44,7 @@ predio = pygame.transform.scale(predio, (largura_tela, altura_tela))
 gato = pygame.transform.scale(gato, (50,38))
 pessoa = pygame.transform.scale(pessoa, (70,80))
 
-# Inicia assets
+# Fontes e palavras que serão usadas no jogo
 font = pygame.font.SysFont(None, 48)
 font1= pygame.font.SysFont(None, 70)
 font2=pygame.font.Font(path.join(fontes,'RETRO_SPACE_INV.ttf'),36)
@@ -56,6 +54,7 @@ integrantes = font2.render("Adney, Ricardo e Ykaro", True, (0,0,0))
 Game = font1.render("Game", True, (0, 0, 0))
 Over = font1.render("Over", True, (0, 0, 0))
 
+""" Gerando Tela de final do jogo """
 while tela_inicio:
     # Trata eventos
     for event in pygame.event.get():
@@ -67,7 +66,8 @@ while tela_inicio:
             if event.key == pygame.K_RETURN:
                 jogo = True 
                 tela_inicio=False
-    # ----- Gera saídas
+
+    # Função blit para aparecer as imagens na tela
     tela.blit(ceu, (0,0))
     tela.blit(predio, (-250,300))
     tela.blit(gato, (250 - 50,300 - 38))
@@ -80,7 +80,7 @@ while tela_inicio:
     pygame.display.update()  # Mostra o novo frame para o jogador
 
 
-# Definindo a imagem de fundo 
+# Definindo a imagem de fundo na hora do jogo
 tela = pygame.display.set_mode( (largura_tela,altura_tela) )
 imagem_de_fundo = pygame.image.load(path.join(imagem,'predio1.png')).convert_alpha()
 imagem_de_fundo1 = pygame.image.load(path.join(imagem,'predio2.png')).convert_alpha()
@@ -89,8 +89,8 @@ imagem_de_fundo1 = pygame.transform.scale(imagem_de_fundo1, (largura_tela, altur
 y_imagem_de_fundo= 0
 y_imagem_de_fundo1= altura_tela
 
-#Definindo as vidas
-fonte=pygame.font.Font(path.join(fontes,'PressStart2P.ttf'),36)
+
+fonte = pygame.font.Font(path.join(fontes,'PressStart2P.ttf'),36)
 
 # Definindo as figuras do jogo
 """ Gato """
@@ -210,9 +210,6 @@ class A(pygame.sprite.Sprite):
             self.speedy = random.randint(-4, -2)
 
         
-# Inicializando o jogo
-#jogo = True
-
 # Lista das colisões
 Vida = 3
 
@@ -330,6 +327,7 @@ while jogo:
     if Vida <= 0:
         jogo = False
         tela_final = True
+
     # Desenhando od obstáculos
     all_sprites.draw(tela)
 
