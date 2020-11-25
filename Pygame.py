@@ -7,40 +7,9 @@
 # Blibiotecas importadas
 import pygame
 import random
+
 # Inicializando o Pygame
 pygame.init()
-
-""" Gerando Tela de início do jogo """
-"""
-tela = pygame.display.set_mode((500, 500))
-pygame.display.set_caption('Pygame')
-
-# Inicia estruturas de dados
-game = True
-
-# Inicia assets
-font = pygame.font.SysFont(None, 48)
-ModSim = font.render('ModSim', True, (255, 255, 255))
-cat = font.render("CAT", True, (255, 255, 255))
-# Loop principal
-while game:
-    # Trata eventos
-    for event in pygame.event.get():
-        # Verifica consequências
-        if event.type == pygame.QUIT:
-            game = False
-
-    # ----- Gera saídas
-    tela.fill((0, 0, 0))  # Preenche com a cor branca
-    tela.blit(ModSim, (180, 200))
-    tela.blit(cat, (210,250))
-
-    # ----- Atualiza estado do jogo
-    pygame.display.update()  # Mostra o novo frame para o jogador
-
-# ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
-"""
 
 # Definindo a imagem de fundo 
 largura_tela= 500
@@ -53,6 +22,8 @@ imagem_de_fundo1 = pygame.transform.scale(imagem_de_fundo1, (largura_tela, altur
 y_imagem_de_fundo= 0
 y_imagem_de_fundo1= altura_tela
 
+#Definindo as vidas
+fonte=pygame.font.Font('c:/Users/adney/OneDrive/Documentos/1° semestre - Insper/Desing de Software/Imagens Pygame/Pressstart2P.ttf',28)
 
 # Definindo as figuras do jogo
 """ Gato """
@@ -78,6 +49,8 @@ A_imagem = pygame.transform.scale(A_imagem, (largura_A,altura_A) )
 
 
 
+
+
 # Definindo as classes:
 class Gato(pygame.sprite.Sprite):
     def __init__(self, img):
@@ -86,8 +59,8 @@ class Gato(pygame.sprite.Sprite):
 
         self.image = img
         self.rect = self.image.get_rect()
-        self.rect.centerx = largura_tela / 2
-        self.rect.bottom = altura_tela / 2 - 180
+        self.rect.centerx = largura_tela / 2 
+        self.rect.bottom = altura_tela / 2 -180
         self.speedx = 0
 
     def update(self):
@@ -108,7 +81,7 @@ class DP(pygame.sprite.Sprite):
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, largura_tela - largura_DP)
-        self.rect.y = random.randint(620, 650)
+        self.rect.y = random.randint(620,650)
         self.speedx = random.randint(-1, 1)
         self.speedy = random.randint(-4, -2)
 
@@ -118,9 +91,9 @@ class DP(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         # Se o meteoro passar do final da tela, volta para cima e sorteia
         # novas posições e velocidades
-        if self.rect.top < 0 or self.rect.right < 0 or self.rect.left > largura_tela:
+        if self.rect.top <0 or self.rect.right < 0 or self.rect.left > largura_tela:
             self.rect.x = random.randint(0, largura_tela - largura_DP)
-            self.rect.y = random.randint(620, 650)
+            self.rect.y = random.randint(620,650)
             self.speedx = random.randint(-1, 1)
             self.speedy = random.randint(-4, -2)
 
@@ -132,9 +105,9 @@ class DPlinha(pygame.sprite.Sprite):
         self.image = img
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, largura_tela - largura_DPlinha)
-        self.rect.y = random.randint(620, 650)
+        self.rect.y = random.randint(620,650)
         self.speedx = random.randint(-1, 1)
-        self.speedy = random.randint(-4, -2)
+        self.speedy =random.randint(-4, -2)
 
     def update(self):
         # Atualizando a posição do meteoro
@@ -142,16 +115,16 @@ class DPlinha(pygame.sprite.Sprite):
         self.rect.y += self.speedy
         # Se o meteoro passar do final da tela, volta para cima e sorteia
         # novas posições e velocidades
-        if self.rect.top < 0 or self.rect.right < 0 or self.rect.left > largura_tela:
+        if self.rect.top <0 or self.rect.right < 0 or self.rect.left > largura_tela:
             self.rect.x = random.randint(0, largura_tela - largura_DPlinha)
-            self.rect.y = random.randint(620, 650)
+            self.rect.y = random.randint(620,650)
             self.speedx = random.randint(-1, 1)
             self.speedy = random.randint(-4, -2)
 
 class A(pygame.sprite.Sprite):
-    def _init_(self, img):
+    def __init__(self, img):
         # Construtor da classe mãe (Sprite).
-        pygame.sprite.Sprite._init_(self)
+        pygame.sprite.Sprite.__init__(self)
 
         self.image = img
         self.rect = self.image.get_rect()
@@ -177,31 +150,23 @@ class A(pygame.sprite.Sprite):
 jogo = True
 
 # Lista das colisões
-Vida = [0,0,0]
-
+colisao_dp = []
+colisao_dplinha = []
 # Criando um grupo para cada obstáculo
 all_sprites = pygame.sprite.Group()
 all_dps = pygame.sprite.Group()
 all_dplinhas = pygame.sprite.Group()
-all_as = pygame.sprite.Group()
-
 # Criando o jogador
 gato = Gato(gato_imagem)
 all_sprites.add(gato)
-
 # Criando os obstáculos
 for i in range(2):
     dp = DP(DP_imagem)
-    dplinha = DPlinha(DPlinha_imagem)
-    a = A(A_imagem)
-
+    dplinha= DPlinha(DPlinha_imagem)
     all_sprites.add(dp)
     all_sprites.add(dplinha)
-    all_sprites.add(a)
-
     all_dps.add(dp)
     all_dplinhas.add(dplinha)
-    all_as.add(a)
 
 # Tempo para atualização de imagens
 clock = pygame.time.Clock()
@@ -251,37 +216,23 @@ while jogo:
     # Atualizando a posição dos meteoros
     all_sprites.update()
      
-     # Tratamento de colisões
+     # Tratamento das colisões
     hits_dp = pygame.sprite.spritecollide(gato, all_dps, True)
-    for dp in hits_dp:
-        g=DP(DP_imagem)
-        all_sprites.add(g)
-        all_dps.add(g)
-    
     hits_dplinha = pygame.sprite.spritecollide(gato, all_dplinhas, True)
-    for dpl in hits_dplinha:
-        h=DPlinha(DPlinha_imagem)
-        all_sprites.add(h)
-        all_dplinhas.add(h)
-    
-    hits_a = pygame.sprite.spritecollide(gato, all_as, True)
-    for a in hits_a:
-        i=DP(A_imagem)
-        all_sprites.add(i)
-        all_as.add(i)
 
     # Definido como fica a vida do gato após a colisão
     if len(hits_dp) >= 1:
-        Vida.remove(Vida[0])
-
+        colisao_dp.append(0)
     if len(hits_dplinha) >= 1:
-        Vida.remove(Vida[0])
-        Vida.remove(Vida[0])
+        colisao_dplinha.append(0)
 
-    if len(hits_a) >= 1:
-        Vida.append(0)
-
-    if len(Vida) <= 0:
+    if len(colisao_dp) >= 3:
+        jogo = False
+    if len(colisao_dplinha) >= 2:
+        jogo = False
+    if len(colisao_dp) == 1 and len(colisao_dplinha) == 1:
+        jogo = False
+    if len(colisao_dp) >= 2 and len(colisao_dplinha) == 1:
         jogo = False
         
     # Desenhando os obstáculos e o gato
