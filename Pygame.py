@@ -150,38 +150,44 @@ class A(pygame.sprite.Sprite):
 jogo = True
 
 # Lista das colisões
-colisao_dp = []
-colisao_dplinha = []
+Vida = [0,0,0]
+
 # Criando um grupo para cada obstáculo
 all_sprites = pygame.sprite.Group()
 all_dps = pygame.sprite.Group()
 all_dplinhas = pygame.sprite.Group()
+all_as = pygame.sprite.Group()
+
 # Criando o jogador
 gato = Gato(gato_imagem)
 all_sprites.add(gato)
+
 # Criando os obstáculos
 for i in range(2):
     dp = DP(DP_imagem)
-    dplinha= DPlinha(DPlinha_imagem)
+    dplinha = DPlinha(DPlinha_imagem)
+    a = A(A_imagem) 
+
     all_sprites.add(dp)
     all_sprites.add(dplinha)
+    all_sprites.add(a)
+
     all_dps.add(dp)
     all_dplinhas.add(dplinha)
-
-# Tempo para atualização de imagens
-clock = pygame.time.Clock()
+    all_as.add(a)
 
 # Tempo para atualização de imagens
 clock = pygame.time.Clock()
 
 while jogo:
     clock.tick(200) # Grante um FPS de 300Hz
-        # ----- Trata eventos
+
+    # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             jogo = False
-    # Verifica se apertou alguma tecla.
+        # Verifica se apertou alguma tecla.
         if event.type == pygame.KEYDOWN:
             # Dependendo da tecla, altera a velocidade.
             if event.key == pygame.K_LEFT:
@@ -195,16 +201,24 @@ while jogo:
                 gato.speedx += 5
             if event.key == pygame.K_RIGHT:
                 gato.speedx -= 5
+
         # ----- Gera saídas
-    
+    ## Desenhando as vidas
+    vidas = fonte.render(chr(9829) * len(Vida), True, (0,255,20))
+    vidas_rect = vidas.get_rect()
+    vidas_rect.bottomleft = (10,altura_tela-10)
+    tela.blit(vidas, vidas_rect)
+
+
+
     # Chamando a função blit para que nossas imangens apareção na tela
     tela.blit(imagem_de_fundo, (0,y_imagem_de_fundo))
     tela.blit(imagem_de_fundo1, (0,y_imagem_de_fundo1))
     #tela.blit(gato_imagem, (250,300))
 
     # Mudando as posições da imagem de fundo para que tenhamos a impressão do gato estar caindo
-    y_imagem_de_fundo -= 1
-    y_imagem_de_fundo1 -= 1
+    y_imagem_de_fundo -= 2
+    y_imagem_de_fundo1 -= 2
 
     # Condicionais para que as imagens continuem aparecendo mesmo após sair da tela
     if y_imagem_de_fundo1 <= -altura_tela:
@@ -213,33 +227,49 @@ while jogo:
     if y_imagem_de_fundo <= -altura_tela:
         y_imagem_de_fundo= altura_tela
 
+    # ----- Atualiza estado do jogo
     # Atualizando a posição dos meteoros
     all_sprites.update()
-     
-     # Tratamento das colisões
+
+    # Tratamento de colisões
     hits_dp = pygame.sprite.spritecollide(gato, all_dps, True)
+    for dp in hits_dp:
+        g=DP(DP_imagem)
+        all_sprites.add(g)
+        all_dps.add(g)
+    
     hits_dplinha = pygame.sprite.spritecollide(gato, all_dplinhas, True)
+    for dpl in hits_dplinha:
+        h=DPlinha(DPlinha_imagem)
+        all_sprites.add(h)
+        all_dplinhas.add(h)
+    
+    hits_a = pygame.sprite.spritecollide(gato, all_as, True)
+    for a in hits_a:
+        i=DP(A_imagem)
+        all_sprites.add(i)
+        all_as.add(i)
 
     # Definido como fica a vida do gato após a colisão
     if len(hits_dp) >= 1:
-        colisao_dp.append(0)
-    if len(hits_dplinha) >= 1:
-        colisao_dplinha.append(0)
+        Vida.remove(Vida[0])
 
-    if len(colisao_dp) >= 3:
+    if len(hits_dplinha) >= 1:
+        Vida.remove(Vida[0])
+        Vida.remove(Vida[0])
+
+    if len(hits_a) >= 1:
+        Vida.append(0)
+
+    if len(Vida) <= 0:
         jogo = False
-    if len(colisao_dplinha) >= 2:
-        jogo = False
-    if len(colisao_dp) == 1 and len(colisao_dplinha) == 1:
-        jogo = False
-    if len(colisao_dp) >= 2 and len(colisao_dplinha) == 1:
-        jogo = False
-        
-    # Desenhando os obstáculos e o gato
+
+    # Desenhando od obstáculos
     all_sprites.draw(tela)
 
-    # ----- Atualiza estado do jogo
+        # ----- Atualiza estado do jogo
     pygame.display.update() 
-    
+     # Mostra o novo frame para o jogador
+
 # ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados 
+pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
