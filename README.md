@@ -8,6 +8,7 @@ do Mundo Físico, a qual consistia na análise e modelagem da queda de um gato d
 Esse trabalho foi feito pelos seguintes alunos: Adney, Ricardo e Ykaro.
 
 REGRAS:
+Para iniciar o jogo o jogador precisa aperta a tecla enter.
 O jogo consiste na queda infinita de um gato até que ele zere sua quantidade de vidas.
 O gato inicia o jogo com 3 vidas, entretanto, caso ele esbarre nos obstáculos postos, sua
 vida é alterada para mais ou para menos dependendo do objeto. Caso ele enconste no bloco DP
